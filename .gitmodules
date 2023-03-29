@@ -1,0 +1,3 @@
+[submodule "aflpp"]
+	path = aflpp
+	url = https://github.com/AFLplusplus/AFLplusplus.git
