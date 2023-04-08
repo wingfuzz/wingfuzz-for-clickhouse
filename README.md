@@ -35,7 +35,7 @@ Arguments:
 Environment Variables:
 
 * `NO_ASAN`: (Optional) By default, the script build clickhouse with Address Sanitizer. Run `export NO_ASAN=1` before build if you don't want it. Without asan, the server runs faster, but cannot detect some memory-related defects.
-* `BUILDER_IMAGE`: (Optional) Name to the image built in [3. build clickhouse](#3-build-clickhouse). Defaults to `clickhouse-wingfuzz`
+* `BUILDER_IMAGE`: (Optional) Name to the image built in [2. Build docker image](#2-build-docker-image). Defaults to `clickhouse-wingfuzz`
 
 ## 4. Start fuzzing test
 
