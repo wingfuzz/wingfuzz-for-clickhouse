@@ -12,14 +12,31 @@ git submodule update --init --progress aflpp
 git submodule update --init --progress --recursive clickhouse-odbc
 ```
 
-## 1. build docker image
+## 2. Build docker image
 
 ```bash
 docker build . -t clickhouse-wingfuzz
 ```
 
-## 2. build clickhouse
+## 3. Build clickhouse
 
+```bash
+./build-clickhouse.sh PATH_TO_CLICKHOUSE PATH_TO_BUILD [PATH_TO_CACHE]
 ```
 
-```
+Arguments:
+
+* `PATH_TO_CLICKHOUSE`: Path to clickhouse repo (https://github.com/ClickHouse/ClickHouse) with all submodules updated
+
+* `PATH_TO_BUILD`: An empty dir to store built artifacts
+
+* `PATH_TO_CACHE`: An empty dir to store caches (cargo and ccache). Can be omitted so there will be no cache.
+
+Environment Variables:
+
+* `NO_ASAN`: (Optional) By default, the script build clickhouse with Address Sanitizer. Run `export NO_ASAN=1` before build if you don't want it. Without asan, the server runs faster, but cannot detect some memory-related defects.
+* `BUILDER_IMAGE`: (Optional) Name to the image built in [3. build clickhouse](#3-build-clickhouse). Defaults to `clickhouse-wingfuzz`
+
+## 4. Start fuzzing test
+
+
