@@ -1,3 +1,6 @@
 [submodule "aflpp"]
 	path = aflpp
 	url = https://github.com/AFLplusplus/AFLplusplus.git
+[submodule "clickhouse-odbc"]
+	path = clickhouse-odbc
+	url = https://github.com/ClickHouse/clickhouse-odbc.git
