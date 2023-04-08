@@ -7,12 +7,12 @@ RUN apt update && \
 COPY . /
 
 RUN cd /aflpp && \
-    LLVM_CONFIG=llvm-config-15 make PREFIX=/opt/wfuzz install && \
+    LLVM_CONFIG=llvm-config-15 make PREFIX=/opt/wfuzz install -j && \
     cd /clickhouse-odbc && \
     mkdir -p build && \
     cd build && \
     cmake ..  && \
-    make && \
+    make -j && \
     mkdir -p /opt/wfuzz/lib && \
     cp driver/libclickhouseodbc.so driver/libclickhouseodbcw.so /opt/wfuzz/lib
 
