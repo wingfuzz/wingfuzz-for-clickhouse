@@ -1,0 +1,24 @@
+{
+    "product": "db",
+    "name": "clickhouse",
+    "version": "23.2.4.1",
+    "scripts": {
+        "init": "mkdir -p $DATADIR",
+        "start": "/home/elm/xfuzzable/clickhouse/build/programs/clickhouse-server --pidfile=$DATADIR/server.pid -- --path=$DATADIR --http_port=$PORT --mysql_port= --postgresql_port= --tcp_port=",
+        "kill": "kill -9 `cat $DATADIR/server.pid`"
+    },
+    "connection": {
+        "type": "unixodbc",
+        "odbcinst.ini": "odbcinst.ini",
+        "odbc.ini": "odbc.ini",
+        "dsn": "management"
+    },
+    "mode": "greybox",
+    "metaquery": "clickhouse",
+    "reset": "",
+    "timeout_init": 30,
+    "timeout_start": 30,
+    "timeout_query": 5,
+    "map_size": 12800000,
+    "seeds": "./input-set"
+}

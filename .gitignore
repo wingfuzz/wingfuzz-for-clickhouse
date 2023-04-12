@@ -2,3 +2,6 @@ build*
 cache
 data
 test
+wfuzz-test-*
+input-set
+preprocessed_configs
