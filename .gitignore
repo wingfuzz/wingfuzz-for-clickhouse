@@ -1,7 +1,9 @@
 build*
 cache
 data
-test
+test*
 wfuzz-test-*
 input-set
 preprocessed_configs
+wfuzz
+seeds

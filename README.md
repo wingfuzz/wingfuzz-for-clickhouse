@@ -39,4 +39,31 @@ Environment Variables:
 
 ## 4. Start fuzzing test
 
+1. Unarchive seeds
+```
+tar xzvf seeds.tar.gz
+```
+
+2. Start fuzzing test with the following command:
+
+```
+./fuzz.sh PATH_TO_CLICKHOUSE_BINARY PATH_TO_SEEDS PATH_TO_TEST_DATA
+```
+
+Arguments: 
+
+* `PATH_TO_CLICKHOUSE_BINARY`: Path to `clickhouse` binary, normally it is at `PATH_TO_BUILD/programs/clickhouse`.
+* `PATH_TO_SEEDS`: Path to seeds. It contains several sql files.
+* `PATH_TO_TEST_DATA`: A dir to store test files, like corpus, crashes, etc.
+
+When you see something like:
+```
+Attempting dry run with 'id:000015,time:0,execs:0,orig:dump2.sql'...
+    len = 1884, map size = 13936, exec speed = 7
+```
+
+It means the test is started normally and began to process initial seeds.
+
+
+To find test results, goto dir `PATH_TO_TEST_DATA/1/project/anomaly`
 
