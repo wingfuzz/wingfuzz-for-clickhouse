@@ -20,13 +20,10 @@ COPY aflpp /aflpp
 RUN cd /aflpp && \
     LLVM_CONFIG=llvm-config-15 make PREFIX=/opt/wfuzz install -j
 
-COPY input-set.tar.gz wfuzz.tar.gz /
+COPY wfuzz.tar.gz /
 
 RUN cd /opt && \
-    tar xzvf /wfuzz.tar.gz && \
-    mkdir /input-set && \
-    cd /input-set && \
-    tar xzvf /input-set.tar.gz
+    tar xzvf /wfuzz.tar.gz
 
 FROM clickhouse/binary-builder
 

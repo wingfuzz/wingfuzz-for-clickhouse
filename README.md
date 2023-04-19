@@ -39,12 +39,22 @@ Environment Variables:
 
 ## 4. Start fuzzing test
 
-1. Unarchive seeds
+1. Obtain a license
+
+Before test you should obtain a license for WINGFUZZ.
+For a trial you can contact us via email: contact@shuimuyulin.com.
+
+The license is a string. You should set it with environment variable:
+```
+export WFUZZ_LICENSE=...
+```
+
+2. Unarchive seeds
 ```
 tar xzvf seeds.tar.gz
 ```
 
-2. Start fuzzing test with the following command:
+3. Start fuzzing test with the following command:
 
 ```
 ./fuzz.sh PATH_TO_CLICKHOUSE_BINARY PATH_TO_SEEDS PATH_TO_TEST_DATA
