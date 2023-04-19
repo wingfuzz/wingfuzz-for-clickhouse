@@ -30,4 +30,4 @@ docker run -it --rm \
     -v "$TEST_DIR":/test \
     -e WFUZZ_LICENSE="$WFUZZ_LICENSE" \
     $FUZZER_IMAGE \
-    bash -c '/opt/wfuzz/bin/wfuzz fuzz /workdir --workdir=/test & tail -f --retry /test/1/griffin.log'
+    bash -c 'tail -f --retry /test/1/griffin.log & /opt/wfuzz/bin/wfuzz fuzz /workdir --workdir=/test'
