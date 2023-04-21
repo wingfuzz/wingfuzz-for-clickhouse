@@ -77,3 +77,54 @@ It means the test is started normally and began to process initial seeds.
 
 To find test results, goto dir `PATH_TO_TEST_DATA/1/project/anomaly`
 
+
+## Analyzing fuzzing result
+
+In the dir `PATH_TO_TEST_DATA/1/project/anomaly` there are 3 subdirs:
+
+* `content`: Store the SQL statement which triggers crashes.
+* `log`:     Last 2000 lines of server logs when the crash happened.
+* `report`:  Last 2000 lines of logs of WINGFUZZ tools.
+
+When a crash found, three files will be written to these dirs.
+Their filename are same and naming like `id_000000_[timestamp]`.
+
+The files in `content` and `log` are usually useful. 
+Content file is used to reproduce the crash. 
+You should start a server in a clean state and run the content file from any client.
+If lucky you will see a crash happens.
+
+Unfortunately, ClickHouse will crash randomly in many cases.
+Results in an unreproducible content file. 
+So log file is still important.
+You can search crash patterns like `"AddressSanitizer"` in log file.
+And analyze the stacktrace by hand.
+
+## Reproduce the crashes
+
+```
+./repro.sh PATH_TO_CLICKHOUSE_BINARY PATH_TO_TEST_DATA PATH_TO_REPRO_DATA [REPEAT_TIMES]
+```
+
+Arguments: 
+
+* `PATH_TO_CLICKHOUSE_BINARY`: Path to `clickhouse` binary, same as the fuzz script.
+* `PATH_TO_TEST_DATA`: A dir to store test files, same as the fuzz script.
+* `PATH_TO_REPRO_DATA`: A dir to store reproduce result.
+* `REPEAT_TIMES`: Repeat times to run a single case.
+
+Difference between fuzz and repro:
+
+* In fuzzing mode the server will be started long period. 
+Between cases we will run reset statement `DROP DATABASE ...; CREATE DATABASE ...`. But server is not restarted. Such statement may not fully reset the database.
+   
+* In reproduce mode the server will always started from an empty data dir. To make sure the state is fully clean. And server will be killed after each run. There is no reuse between cases to prevent internal state related problems.
+
+In `PATH_TO_REPRO_DATA` there will be such files:
+
+* `CONTENT_NAME.REPEAT.server.log`: The server log for `REPEAT`-th round of `CONTENT_NAME`.
+* `CONTENT_NAME.REPEAT.wfuzz.log`: The WINGFUZZ tool log for `REPEAT`-th round of `CONTENT_NAME`.
+* `CONTENT_NAME.REPEAT.asan_detected`: Only created when we find ASAN message (AddressSanitizer) in server log. Contains the ASAN message.
+* `CONTENT_NAME.REPEAT.crash_detected`: Only created when we find some child process is killed by signal. Contains the PID ang signal number.
+
+You can filter files with `asan_detected` or `crash_detected` to make the analyzing easier.

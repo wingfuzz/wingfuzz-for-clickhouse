@@ -1,2 +1,7 @@
 wfuzz-test-*
 wfuzz
+build
+cache
+seeds
+test*
+repro*

@@ -28,7 +28,7 @@ RUN cd /opt && \
 FROM clickhouse/binary-builder
 
 RUN apt update && \
-    apt install -y unixodbc-dev libsqlite3-dev libboost-serialization1.71.0 libboost-program-options1.71.0 && \
+    apt install -y unixodbc-dev unixodbc libsqlite3-dev libboost-serialization1.71.0 libboost-program-options1.71.0 && \
     apt clean
 
 COPY --from=0 /opt/wfuzz /opt/wfuzz
